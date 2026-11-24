@@ -1,0 +1,177 @@
+name: adult-classifier-sci
+description: SCI of the Adult income classifier (INFO-H420 project, Q2)
+initialize:
+  plugins:
+    operational-carbon:
+      method: Multiply
+      path: builtin
+      config:
+        input-parameters:
+        - energy
+        - grid/carbon-intensity
+        output-parameter: carbon-operational
+    embodied-carbon:
+      method: SciEmbodied
+      path: builtin
+      config:
+        baseline-emissions: 307594.0
+        lifespan: 126144000
+    total-carbon:
+      method: Sum
+      path: builtin
+      config:
+        input-parameters:
+        - carbon-operational
+        - embodied-carbon
+        output-parameter: carbon
+    sci-training:
+      method: Sci
+      path: builtin
+      config:
+        functional-unit: training-runs
+    sci-inference:
+      method: Sci
+      path: builtin
+      config:
+        functional-unit: thousand-predictions
+tree:
+  children:
+    training:
+      children:
+        be-average:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003047170920462037
+            grid/carbon-intensity: 181.7
+            training-runs: 100.0
+            usage-ratio: 1.0
+        be-winter-peak:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003047170920462037
+            grid/carbon-intensity: 232.0
+            training-runs: 100.0
+            usage-ratio: 1.0
+        be-summer-midday:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003047170920462037
+            grid/carbon-intensity: 104.4
+            training-runs: 100.0
+            usage-ratio: 1.0
+        be-cleanest-hour:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003047170920462037
+            grid/carbon-intensity: 61.5
+            training-runs: 100.0
+            usage-ratio: 1.0
+        be-dirtiest-hour:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003047170920462037
+            grid/carbon-intensity: 376.1
+            training-runs: 100.0
+            usage-ratio: 1.0
+        cloud-sweden:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003351888012508241
+            grid/carbon-intensity: 21.3
+            training-runs: 100.0
+            usage-ratio: 1.0
+        cloud-france:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003351888012508241
+            grid/carbon-intensity: 32.0
+            training-runs: 100.0
+            usage-ratio: 1.0
+        cloud-poland:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-training
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 16
+            time: 15.624415800000861
+            energy: 0.0003351888012508241
+            grid/carbon-intensity: 676.6
+            training-runs: 100.0
+            usage-ratio: 1.0
+    inference:
+      children:
+        be-average:
+          pipeline:
+            compute:
+            - operational-carbon
+            - embodied-carbon
+            - total-carbon
+            - sci-inference
+          inputs:
+          - timestamp: '2026-11-24T13:27:40Z'
+            duration: 2
+            time: 1.0898397999990266
+            energy: 1.7061558725672226e-05
+            grid/carbon-intensity: 181.7
+            thousand-predictions: 603.3
+            usage-ratio: 1.0

@@ -1,0 +1,343 @@
+name: adult-classifier-sci
+description: SCI of the Adult income classifier (INFO-H420 project, Q2)
+initialize:
+  plugins:
+    operational-carbon:
+      path: builtin
+      method: Multiply
+      config:
+        input-parameters:
+          - energy
+          - grid/carbon-intensity
+        output-parameter: carbon-operational
+    embodied-carbon:
+      path: builtin
+      method: SciEmbodied
+      config:
+        baseline-emissions: 307594
+        lifespan: 126144000
+    total-carbon:
+      path: builtin
+      method: Sum
+      config:
+        input-parameters:
+          - carbon-operational
+          - embodied-carbon
+        output-parameter: carbon
+    sci-training:
+      path: builtin
+      method: Sci
+      config:
+        functional-unit: training-runs
+    sci-inference:
+      path: builtin
+      method: Sci
+      config:
+        functional-unit: thousand-predictions
+execution:
+  command: >-
+    C:\Program Files\nodejs\node.exe
+    C:\Users\elhar\AppData\Roaming\npm\node_modules\@grnsft\if\build\if-run\index.js
+    -m sci_manifest.yml -o sci_output
+  environment:
+    if-version: 1.1.1
+    os: Microsoft Windows 11 Famille
+    os-version: 10.0.26300 N/A Build 26300
+    node-version: 26.13.1
+    date-time: 2026-11-24T13:27:40.483Z (UTC)
+    dependencies: []
+  status: success
+tree:
+  children:
+    training:
+      children:
+        be-average:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 181.7
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 181.7
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.05536709562479521
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.09346622482305644
+              sci: 0.0009346622482305644
+        be-winter-peak:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 232
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 232
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.07069436535471926
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.10879349455298049
+              sci: 0.0010879349455298049
+        be-summer-midday:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 104.4
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 104.4
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.03181246440962367
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.0699115936078849
+              sci: 0.000699115936078849
+        be-cleanest-hour:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 61.5
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 61.5
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.018740101160841526
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.05683923035910275
+              sci: 0.0005683923035910276
+        be-dirtiest-hour:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 376.1
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003047170920462037
+              grid/carbon-intensity: 376.1
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.11460409831857722
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.15270322751683846
+              sci: 0.0015270322751683846
+        cloud-sweden:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 21.3
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 21.3
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.007139521466642553
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.04523865066490378
+              sci: 0.0004523865066490378
+        cloud-france:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 32
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 32
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.01072604164002637
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.0488251708382876
+              sci: 0.000488251708382876
+        cloud-poland:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-training
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 676.6
+              training-runs: 100
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 16
+              time: 15.624415800000861
+              energy: 0.0003351888012508241
+              grid/carbon-intensity: 676.6
+              training-runs: 100
+              usage-ratio: 1
+              carbon-operational: 0.22678874292630757
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.03809912919826123
+              carbon: 0.2648878721245688
+              sci: 0.002648878721245688
+    inference:
+      children:
+        be-average:
+          pipeline:
+            compute:
+              - operational-carbon
+              - embodied-carbon
+              - total-carbon
+              - sci-inference
+          inputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 2
+              time: 1.0898397999990266
+              energy: 0.000017061558725672226
+              grid/carbon-intensity: 181.7
+              thousand-predictions: 603.3
+              usage-ratio: 1
+          outputs:
+            - timestamp: '2026-11-24T13:27:40Z'
+              duration: 2
+              time: 1.0898397999990266
+              energy: 0.000017061558725672226
+              grid/carbon-intensity: 181.7
+              thousand-predictions: 603.3
+              usage-ratio: 1
+              carbon-operational: 0.003100085220454643
+              vCPUs: 1
+              memory: 16
+              ssd: 0
+              hdd: 0
+              gpu: 0
+              embodied-carbon: 0.0026575039910015585
+              carbon: 0.005757589211456202
+              sci: 0.000009543492808646116

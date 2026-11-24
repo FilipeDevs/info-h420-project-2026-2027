@@ -2,3 +2,6 @@ numpy
 pandas
 scikit-learn>=1.2
 jupyter
+codecarbon
+pyyaml
+matplotlib
