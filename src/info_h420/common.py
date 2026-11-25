@@ -3,7 +3,7 @@ Shared pipeline for the INFO-H420 Responsible AI project (Adult dataset).
 
 Every section of the project imports this module so that all classifiers
 (classifier, fair, private, private+fair) use exactly the same
-preprocessing, the same train/validation/test split and the same model.
+preprocessing, the same train/test split and the same model.
 
 Conventions
 -----------
@@ -16,7 +16,7 @@ Conventions
 * The split is stratified on the label only. Because noisy (LDP) versions
   of age/sex do not change the label nor the row order, calling
   split_data() on the private DataFrame gives exactly the same rows in
-  train/validation/test as on the real DataFrame (requirement of Q4).
+  train/test as on the real DataFrame (requirement of Q4).
 """
 
 from pathlib import Path
@@ -43,12 +43,11 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 # ---------------------------------------------------------------------------
 SEED = 42
 AGE_THRESHOLD = 37          # median age of the cleaned data, two groups of ~equal size
-VAL_SIZE = 0.20             # fractions of the full cleaned data
 TEST_SIZE = 0.20
 MODEL = "logreg"            # "logreg" (default) or "hgb"
-LOGREG_C = 1.0              # chosen on the validation set in q1_classification.ipynb
+LOGREG_C = 1.0              # default when no tuned value is supplied
 
-DATA_PATH = Path(__file__).resolve().parent / "data" / "adult.data"
+DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "adult.data"
 
 COLUMNS = [
     "age", "workclass", "fnlwgt", "education", "education-num",
@@ -105,28 +104,16 @@ def load_data(path=DATA_PATH, age_threshold=AGE_THRESHOLD):
 
 
 def split_indices(df, seed=SEED):
-    """Return the row indices of the train, validation and test sets.
-
-    60/20/20 split, stratified on the label only (see module docstring).
-    """
-    idx = np.arange(len(df))
-    y = df[LABEL].to_numpy()
-    idx_trval, idx_test = train_test_split(
-        idx, test_size=TEST_SIZE, stratify=y, random_state=seed
+    """Return train/test row indices with an 80/20 split stratified on income."""
+    return train_test_split(
+        np.arange(len(df)), test_size=TEST_SIZE, stratify=df[LABEL], random_state=seed
     )
-    idx_train, idx_val = train_test_split(
-        idx_trval,
-        test_size=VAL_SIZE / (1 - TEST_SIZE),
-        stratify=y[idx_trval],
-        random_state=seed,
-    )
-    return idx_train, idx_val, idx_test
 
 
 def split_data(df, seed=SEED):
-    """Return (train, val, test) DataFrames using split_indices()."""
-    idx_train, idx_val, idx_test = split_indices(df, seed)
-    return df.iloc[idx_train], df.iloc[idx_val], df.iloc[idx_test]
+    """Return train/test DataFrames using split_indices()."""
+    idx_train, idx_test = split_indices(df, seed)
+    return df.iloc[idx_train], df.iloc[idx_test]
 
 
 def X_y(df):
